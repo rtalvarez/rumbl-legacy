@@ -1,4 +1,4 @@
-defmodule Rumbl.User do
+defmodule Rumbl.Users.User do
 #  use RumblWeb, :model
   use Ecto.Schema
   import Ecto.Changeset

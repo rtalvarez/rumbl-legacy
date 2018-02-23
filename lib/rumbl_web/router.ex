@@ -20,6 +20,7 @@ defmodule RumblWeb.Router do
     get "/", PageController, :index
     resources "/users", UserController, only: ~w(index show new create)a
     resources "/sessions", SessionController, only: ~w(new create delete)a
+    resources "/videos", VideoController
   end
 
   # Other scopes may use custom stacks.
