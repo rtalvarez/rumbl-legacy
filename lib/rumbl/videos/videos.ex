@@ -3,6 +3,7 @@ defmodule Rumbl.Videos do
   The Videos context.
   """
 
+  import Ecto
   import Ecto.Query, warn: false
   alias Rumbl.Repo
 
@@ -21,6 +22,11 @@ defmodule Rumbl.Videos do
     Repo.all(Video)
   end
 
+  def user_videos(user) do
+#    Repo.all(Video)
+    Repo.all(assoc(user, :videos))
+  end
+
   @doc """
   Gets a single video.
 
@@ -36,6 +42,10 @@ defmodule Rumbl.Videos do
 
   """
   def get_video!(id), do: Repo.get!(Video, id)
+
+  def get_user_video!(user, id) do
+    Repo.get!(user_videos(user), id)
+  end
 
   @doc """
   Creates a video.

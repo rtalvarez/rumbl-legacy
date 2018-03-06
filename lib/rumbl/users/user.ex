@@ -1,5 +1,4 @@
 defmodule Rumbl.Users.User do
-#  use RumblWeb, :model
   use Ecto.Schema
   import Ecto.Changeset
 
@@ -8,6 +7,7 @@ defmodule Rumbl.Users.User do
     field :username, :string
     field :password, :string, virtual: true # Virtual fields are not persisted in DB
     field :password_hash, :string
+    has_many :videos, Rumbl.Videos.Video
 
     timestamps()
   end
