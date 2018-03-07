@@ -9,6 +9,7 @@ defmodule Rumbl.Videos.Video do
     field :title, :string
 #    field :user_id, :id
     belongs_to :user, Rumbl.Users.User
+    belongs_to :category, Rumbl.Videos.Category
 
     timestamps()
   end
