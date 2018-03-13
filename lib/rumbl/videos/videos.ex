@@ -8,6 +8,7 @@ defmodule Rumbl.Videos do
   alias Rumbl.Repo
 
   alias Rumbl.Videos.Video
+  alias Rumbl.Videos.Category
 
   @doc """
   Returns the list of videos.
@@ -112,7 +113,6 @@ defmodule Rumbl.Videos do
     Video.changeset(video, %{})
   end
 
-  alias Rumbl.Videos.Category
 
   @doc """
   Returns the list of categories.
@@ -206,5 +206,22 @@ defmodule Rumbl.Videos do
   """
   def change_category(%Category{} = category) do
     Category.changeset(category, %{})
+  end
+
+  def alphabetical_category(query) do
+    Category.alphabetical(query)
+  end
+
+  def category_names_and_ids(query) do
+    Category.names_and_ids(query)
+  end
+
+  def load_categories() do
+    query =
+      Category
+      |> alphabetical_category()
+      |> category_names_and_ids()
+
+      Repo.all(query)
   end
 end

@@ -3,6 +3,12 @@ defmodule RumblWeb.Endpoint do
 
   socket "/socket", RumblWeb.UserSocket
 
+  plug Corsica,
+       log: [rejected: :debug, accepted: :debug, invalid: :debug],
+       origins: ["https://localhost:8082"],
+       allow_headers: ["cache", "content-type"],
+       allow_credentials: true
+
   # Serve at "/" the static files from "priv/static" directory.
   #
   # You should set gzip to true if you are running phoenix.digest

@@ -20,7 +20,7 @@ defmodule Rumbl.Mixfile do
   def application do
     [
       mod: {Rumbl.Application, []},
-      extra_applications: [:logger, :runtime_tools, :comeonin]
+      extra_applications: [:logger, :runtime_tools, :comeonin, :corsica]
     ]
   end
 
@@ -33,6 +33,10 @@ defmodule Rumbl.Mixfile do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
+      {:plug, "~> 1.0"},
+      {:corsica, "~> 1.0"},
+      {:poison, "~> 3.1"},
+      {:httpoison, "~> 1.0"},
       {:bcrypt_elixir, "~> 1.0"},
       {:comeonin, "~> 4.1.0"},
       {:phoenix, "~> 1.3.0"},

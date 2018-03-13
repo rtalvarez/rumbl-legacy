@@ -12,6 +12,7 @@ defmodule RumblWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+#    plug Corsica, origin: "https://localhost:8082"
   end
 
   scope "/", RumblWeb do
@@ -20,6 +21,13 @@ defmodule RumblWeb.Router do
     get "/", PageController, :index
     resources "/users", UserController, only: ~w(index show new create)a
     resources "/sessions", SessionController, only: ~w(new create delete)a
+  end
+
+  scope "/proxy", RumblWeb do
+    pipe_through :api
+
+    get "/*path", PageController, :proxy
+#    options "/*path", PageController, :options_proxy
   end
 
   scope "/manage", RumblWeb do
