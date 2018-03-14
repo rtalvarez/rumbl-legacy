@@ -3,7 +3,7 @@ defmodule RumblWeb.VideoController do
 
   alias Rumbl.Videos
 
-  plug :load_categories when action in [:new, :create, :edit, :update]
+  plug(:load_categories when action in [:new, :create, :edit, :update])
 
   def action(conn, _) do
     apply(__MODULE__, action_name(conn), [conn, conn.params, conn.assigns.current_user])
@@ -16,24 +16,25 @@ defmodule RumblWeb.VideoController do
 
   def new(conn, _params, user) do
     changeset =
-    user
-    |> build_assoc(:videos)
-    |> Videos.change_video()
+      user
+      |> build_assoc(:videos)
+      |> Videos.change_video()
 
     render(conn, "new.html", changeset: changeset)
   end
 
   def create(conn, %{"video" => video_params}, user) do
     changeset =
-    user
-    |> build_assoc(:videos)
-    |> Videos.create_video(video_params)
+      user
+      |> build_assoc(:videos)
+      |> Videos.create_video(video_params)
 
     case changeset do
       {:ok, _video} ->
         conn
         |> put_flash(:info, "Video created successfully.")
         |> redirect(to: video_path(conn, :index))
+
       {:error, changeset} ->
         render(conn, "new.html", changeset: changeset)
     end
@@ -58,6 +59,7 @@ defmodule RumblWeb.VideoController do
         conn
         |> put_flash(:info, "Video updated successfully.")
         |> redirect(to: video_path(conn, :show, video))
+
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "edit.html", video: video, changeset: changeset)
     end
@@ -73,7 +75,7 @@ defmodule RumblWeb.VideoController do
   end
 
   defp load_categories(conn, _) do
-      categories = Videos.load_categories()
-      assign(conn, :categories, categories)
+    categories = Videos.load_categories()
+    assign(conn, :categories, categories)
   end
 end

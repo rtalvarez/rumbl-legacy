@@ -42,12 +42,13 @@ defmodule Rumbl.Auth do
     cond do
       user && Comeonin.Bcrypt.checkpw(given_pass, user.password_hash) ->
         {:ok, login(conn, user)}
+
       user ->
         {:error, :unauthorized, conn}
+
       true ->
         Comeonin.Bcrypt.dummy_checkpw()
         {:error, :not_found, conn}
-
     end
   end
 end

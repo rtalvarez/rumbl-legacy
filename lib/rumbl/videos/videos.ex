@@ -24,7 +24,7 @@ defmodule Rumbl.Videos do
   end
 
   def user_videos(user) do
-#    Repo.all(Video)
+    #    Repo.all(Video)
     Repo.all(assoc(user, :videos))
   end
 
@@ -112,7 +112,6 @@ defmodule Rumbl.Videos do
   def change_video(%Video{} = video) do
     Video.changeset(video, %{})
   end
-
 
   @doc """
   Returns the list of categories.
@@ -222,6 +221,6 @@ defmodule Rumbl.Videos do
       |> alphabetical_category()
       |> category_names_and_ids()
 
-      Repo.all(query)
+    Repo.all(query)
   end
 end

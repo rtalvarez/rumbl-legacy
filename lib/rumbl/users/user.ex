@@ -3,18 +3,20 @@ defmodule Rumbl.Users.User do
   import Ecto.Changeset
 
   schema "users" do
-    field :name, :string
-    field :username, :string
-    field :password, :string, virtual: true # Virtual fields are not persisted in DB
-    field :password_hash, :string
-    has_many :videos, Rumbl.Videos.Video
+    field(:name, :string)
+    field(:username, :string)
+    # Virtual fields are not persisted in DB
+    field(:password, :string, virtual: true)
+    field(:password_hash, :string)
+    has_many(:videos, Rumbl.Videos.Video)
 
     timestamps()
   end
 
   def changeset(model, params \\ :empty) do
+    # TODO: Diff syntax on guide -> cast(params, [:name, :username])
     model
-    |> cast(params, ~w(name username), []) #TODO: Diff syntax on guide -> cast(params, [:name, :username])
+    |> cast(params, ~w(name username), [])
     |> validate_required(~w(name username)a)
     |> validate_length(:username, min: 1, max: 20)
   end
@@ -31,6 +33,7 @@ defmodule Rumbl.Users.User do
     case changeset do
       %Ecto.Changeset{valid?: true, changes: %{password: pass}} ->
         put_change(changeset, :password_hash, Comeonin.Bcrypt.hashpwsalt(pass))
+
       _ ->
         changeset
     end

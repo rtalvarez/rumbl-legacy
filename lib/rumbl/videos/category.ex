@@ -5,7 +5,7 @@ defmodule Rumbl.Videos.Category do
   import Ecto.Query
 
   schema "categories" do
-    field :name, :string
+    field(:name, :string)
 
     timestamps()
   end
@@ -18,10 +18,10 @@ defmodule Rumbl.Videos.Category do
   end
 
   def alphabetical(query) do
-    from c in query, order_by: c.name
+    from(c in query, order_by: c.name)
   end
 
   def names_and_ids(query) do
-    from c in query, select: {c.name, c.id}
+    from(c in query, select: {c.name, c.id})
   end
 end

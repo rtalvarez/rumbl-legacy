@@ -7,7 +7,11 @@ defmodule Rumbl.VideosTest do
     alias Rumbl.Videos.Video
 
     @valid_attrs %{" url": "some  url", description: "some description", title: "some title"}
-    @update_attrs %{" url": "some updated  url", description: "some updated description", title: "some updated title"}
+    @update_attrs %{
+      " url": "some updated  url",
+      description: "some updated description",
+      title: "some updated title"
+    }
     @invalid_attrs %{" url": nil, description: nil, title: nil}
 
     def video_fixture(attrs \\ %{}) do
@@ -31,7 +35,7 @@ defmodule Rumbl.VideosTest do
 
     test "create_video/1 with valid data creates a video" do
       assert {:ok, %Video{} = video} = Videos.create_video(@valid_attrs)
-      assert video. url == "some  url"
+      assert video.url == "some  url"
       assert video.description == "some description"
       assert video.title == "some title"
     end
@@ -44,7 +48,7 @@ defmodule Rumbl.VideosTest do
       video = video_fixture()
       assert {:ok, video} = Videos.update_video(video, @update_attrs)
       assert %Video{} = video
-      assert video. url == "some updated  url"
+      assert video.url == "some updated  url"
       assert video.description == "some updated description"
       assert video.title == "some updated title"
     end

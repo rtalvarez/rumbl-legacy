@@ -1,6 +1,6 @@
 defmodule RumblWeb.UserController do
   use RumblWeb, :controller
-  plug :authenticate_user when action in [:index, :show]
+  plug(:authenticate_user when action in [:index, :show])
 
   alias Rumbl.Users
   alias Rumbl.Users.User
@@ -16,13 +16,14 @@ defmodule RumblWeb.UserController do
   end
 
   def new(conn, params) do
-#    changeset = User.changeset(%User{}, params)
-    changeset = Users.change_user(%User{}, params) # TODO: Missing Params?
+    #    changeset = User.changeset(%User{}, params)
+    # TODO: Missing Params?
+    changeset = Users.change_user(%User{}, params)
     render(conn, "new.html", changeset: changeset)
   end
 
   def create(conn, %{"user" => user_params}) do
-#    changeset = User.registration_changeset(%User{}, user_params)
+    #    changeset = User.registration_changeset(%User{}, user_params)
     changeset = Users.create_user(user_params)
 
     case changeset do
@@ -37,15 +38,14 @@ defmodule RumblWeb.UserController do
     end
   end
 
-#  defp authenticate(conn, _opts) do
-#    if conn.assigns.current_user do
-#      conn
-#    else
-#      conn
-#      |> put_flash(:error, "You must be logged in to access that page")
-#      |> redirect(to: page_path(conn, :index))
-#      |> halt()
-#    end
-#  end
-
+  #  defp authenticate(conn, _opts) do
+  #    if conn.assigns.current_user do
+  #      conn
+  #    else
+  #      conn
+  #      |> put_flash(:error, "You must be logged in to access that page")
+  #      |> redirect(to: page_path(conn, :index))
+  #      |> halt()
+  #    end
+  #  end
 end
