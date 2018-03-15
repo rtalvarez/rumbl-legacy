@@ -24,13 +24,10 @@ defmodule RumblWeb.VideoController do
   end
 
   def create(conn, %{"video" => video_params}, user) do
-    changeset =
-      user
-      |> build_assoc(:videos)
-      |> Videos.create_video(video_params)
+    changeset = Videos.create_video(user, video_params)
 
     case changeset do
-      {:ok, _video} ->
+      {:ok, video} ->
         conn
         |> put_flash(:info, "Video created successfully.")
         |> redirect(to: video_path(conn, :index))

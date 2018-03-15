@@ -60,10 +60,19 @@ defmodule Rumbl.Videos do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_video(attrs \\ %{}) do
-    %Video{}
-    |> Video.changeset(attrs)
-    |> Repo.insert()
+  def create_video(user, attrs \\ %{}) do
+    changeset =
+      %Video{}
+      |> Video.changeset(attrs)
+
+    case changeset do
+      %Ecto.Changeset{valid?: true} ->
+        Ecto.build_assoc(user, :videos, changeset.changes)
+        |> Repo.insert()
+
+      _ ->
+        changeset
+    end
   end
 
   @doc """
