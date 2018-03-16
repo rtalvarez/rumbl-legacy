@@ -45,7 +45,9 @@ defmodule Rumbl.Videos do
   def get_video!(id), do: Repo.get!(Video, id)
 
   def get_user_video!(user, id) do
-    Repo.get!(user_videos(user), id)
+    videos = user_videos(user)
+
+    Enum.find(videos, nil, fn(video) -> video.id == id end)
   end
 
   @doc """
@@ -105,7 +107,11 @@ defmodule Rumbl.Videos do
       {:error, %Ecto.Changeset{}}
 
   """
-  def delete_video(%Video{} = video) do
+#  TODO: IMPROVE (string concatenation)
+  def delete_user_video(user, video_id) do
+    user = Repo.preload(user, :videos)
+    video = Enum.find(user.videos, nil, fn(video) -> "#{video.id}" == video_id end)
+
     Repo.delete(video)
   end
 

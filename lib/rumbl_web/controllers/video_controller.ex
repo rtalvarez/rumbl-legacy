@@ -62,9 +62,8 @@ defmodule RumblWeb.VideoController do
     end
   end
 
-  def delete(conn, %{"id" => id}, user) do
-    video = Videos.get_user_video!(user, id)
-    {:ok, _video} = Videos.delete_video(video)
+  def delete(conn, %{"id" => video_id}, user) do
+    {:ok, _video} = Videos.delete_user_video(user, video_id)
 
     conn
     |> put_flash(:info, "Video deleted successfully.")
