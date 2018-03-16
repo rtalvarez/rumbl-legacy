@@ -39,6 +39,7 @@ defmodule RumblWeb.VideoController do
 
   def show(conn, %{"id" => id}, user) do
     video = Videos.get_user_video!(user, id)
+
     render(conn, "show.html", video: video)
   end
 
@@ -63,11 +64,19 @@ defmodule RumblWeb.VideoController do
   end
 
   def delete(conn, %{"id" => video_id}, user) do
-    {:ok, _video} = Videos.delete_user_video(user, video_id)
+    result = Videos.delete_user_video(user, video_id)
 
-    conn
-    |> put_flash(:info, "Video deleted successfully.")
-    |> redirect(to: video_path(conn, :index))
+    case result do
+      {:ok, _video} ->
+        conn
+        |> put_flash(:info, "Video deleted successfully.")
+        |> redirect(to: video_path(conn, :index))
+
+      #        TODO: Does this work?
+      {:error, _changeset} ->
+        conn
+        |> put_flash(:error, "Video could not be deleted.")
+    end
   end
 
   defp load_categories(conn, _) do
