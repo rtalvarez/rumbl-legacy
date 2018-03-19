@@ -27,7 +27,7 @@ defmodule RumblWeb.VideoController do
     changeset = Videos.create_video(user, video_params)
 
     case changeset do
-      {:ok, video} ->
+      {:ok, _video} ->
         conn
         |> put_flash(:info, "Video created successfully.")
         |> redirect(to: video_path(conn, :index))
@@ -38,7 +38,7 @@ defmodule RumblWeb.VideoController do
   end
 
   def show(conn, %{"id" => id}, user) do
-    video = Videos.get_user_video!(user, id)
+    video = Videos.get_user_video!(user, id, %{:preload => :category})
 
     render(conn, "show.html", video: video)
   end

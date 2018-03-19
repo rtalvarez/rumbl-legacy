@@ -44,12 +44,35 @@ defmodule Rumbl.Videos do
   """
   def get_video!(id), do: Repo.get!(Video, id)
 
-  def get_user_video!(user, id) do
-    videos = user_videos(user)
-
-#    TODO: Fix this too
-    Enum.find(videos, nil, fn video -> "#{video.id}" == id end)
+  def get_user_video!(user, id, opts \\ %{}) do
+    user_videos(user)
+    |> Enum.find(nil, fn video -> "#{video.id}" == id end)
+    |> decorate_user_video(opts)
   end
+
+  defp decorate_user_video(video, %{:preload => option}) when option in [:category] do
+    Repo.preload(video, option)
+  end
+
+  defp decorate_user_video(video, %{}) do
+    video
+  end
+
+#  defp get_user_video!(user, id, %{:preload => option}) do
+#    get_user_video!(user, id)
+#    |> Repo.preload(option)
+#  end
+#
+#  defp get_user_video!(user, id, %{:preload => nil}) do
+#    get_user_video!(user, id)
+#  end
+
+#  defp get_user_video!(user, id) do
+#    videos = user_videos(user)
+#
+#    #    TODO: Fix this too
+#    Enum.find(videos, nil, fn video -> "#{video.id}" == id end)
+#  end
 
   @doc """
   Creates a video.
