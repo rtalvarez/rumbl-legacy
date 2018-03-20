@@ -22,6 +22,9 @@
               <li>
                 <%= link "Log out", to: session_path(@conn, :delete, @current_user), method: "delete" %>
               </li>
+              <li>
+                <%= link "My Videos", to: video_path(@conn, :index) %>
+              </li>
             <% else %>
               <li>
                 <%= link "Register", to: user_path(@conn, :new) %>

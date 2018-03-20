@@ -10,7 +10,7 @@ defmodule RumblWeb.VideoController do
   end
 
   def index(conn, _params, user) do
-    videos = Videos.user_videos(user)
+    videos = Videos.get_user_videos(user)
     render(conn, "index.html", videos: videos)
   end
 

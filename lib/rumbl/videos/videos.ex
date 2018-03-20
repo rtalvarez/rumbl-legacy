@@ -23,7 +23,7 @@ defmodule Rumbl.Videos do
     Repo.all(Video)
   end
 
-  def user_videos(user) do
+  def get_user_videos(user) do
     #    Repo.all(Video)
     Repo.all(assoc(user, :videos))
   end
@@ -45,7 +45,7 @@ defmodule Rumbl.Videos do
   def get_video!(id), do: Repo.get!(Video, id)
 
   def get_user_video!(user, id, opts \\ %{}) do
-    user_videos(user)
+    get_user_videos(user)
     |> Enum.find(nil, fn video -> "#{video.id}" == id end)
     |> decorate_user_video(opts)
   end
@@ -68,7 +68,7 @@ defmodule Rumbl.Videos do
 #  end
 
 #  defp get_user_video!(user, id) do
-#    videos = user_videos(user)
+#    videos = get_user_videos(user)
 #
 #    #    TODO: Fix this too
 #    Enum.find(videos, nil, fn video -> "#{video.id}" == id end)
