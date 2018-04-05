@@ -16,6 +16,10 @@ defmodule RumblWeb.PageController do
     json(conn, body)
   end
 
+  def success(conn, _params) do
+    json(conn, %{})
+  end
+
   #  def options_proxy(conn, _params) do
   #    IO.puts(conn.host)
   #    conn

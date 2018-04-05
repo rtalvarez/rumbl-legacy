@@ -29,6 +29,7 @@ defmodule RumblWeb.Router do
   scope "/proxy", RumblWeb do
     pipe_through(:api)
 
+    post("/success", PageController, :success)
     get("/*path", PageController, :proxy)
     #    options "/*path", PageController, :options_proxy
   end
